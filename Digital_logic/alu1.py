@@ -4,11 +4,11 @@ from myhdl import Signal, block, always_comb, instances
 
 @block
 def Not(c, a):
-    """ Not gate 
+    """ Not gate
 
         c = not a
 
-        a --|>o-- c 
+        a --|>o-- c
     """
     @always_comb
     def comb_logic():
@@ -63,7 +63,7 @@ def Mux2(c, a, b, s):
     a, b -- data inputs
     s -- control input: select b if s is asserted, otherwise a
 
-           s        
+           s
            |
            v
           +-+
@@ -92,20 +92,20 @@ def Mux2_gates(c, a, b, s):
     c -- mux output
     a, b -- data inputs
     s -- control input: select b if s is asserted, otherwise a
-    
+
 
        s
        |
        *----------->|``-.  and1
-       |            |    :------+    
+       |            |    :------+
     a -+----------->|..-`       |
                                 +--->\\--.
        |                              |   :--> c
        |      nots              +--->//..-`
        +--|>o------>|``-.  and2 |
-                    |    :------+  
+                    |    :------+
     b ------------->|..-`
-    
+
     """
 
      # internal signals
@@ -132,11 +132,11 @@ def Mux4(z, a, b, c, d, s):
 
     a, b, c, d: data inputs. Single bits.
 
-    s: select signal. Two bits. 
+    s: select signal. Two bits.
        0 for a, 1 for b, 2 for c, and 3 for d
 
           +-- s1
-          |        
+          |
           | +--s0
           v v
           +--+
@@ -159,18 +159,21 @@ def Mux4(z, a, b, c, d, s):
         # copy values to s1 and s0, which are easier to type
         # in your expression
         s1, s0 = s[1], s[0]
-        z.next = ((not s1 and not s0 and a) or (not s1 and s0 and b) or (s1 and not s0 and c) or (s1 and s0 and d))
+        z.next = ((not s1 and not s0 and a) or
+                  (not s1 and     s0 and b) or
+                  (    s1 and not s0 and c) or
+                  (    s1 and     s0 and d))
 
     return mux_logic
 
 @block
 def Adder1bit(a, b, carryin, carryout, s):
     """ 1-bit adder
-    Input: 
+    Input:
         a, b, and carryin.
 
-    Output: 
-        s:  sum  
+    Output:
+        s:  sum
         carryout: carryout
 
 
@@ -190,13 +193,13 @@ def Adder1bit(a, b, carryin, carryout, s):
         # TODO
         # Generate s and carryout from a, b, and carryin
         # The lecture slides have the logical expressions.
-        # They are short enough so we use one line for adder_sum and 
+        # They are short enough so we use one line for adder_sum and
         # one line for carryout. Remember ".next".
-        # For example, 
-        # s.next = 
-        # carryout.out = 
+        # For example,
+        # s.next =
+        # carryout.out =
         s.next = a ^ b ^ carryin
-        carryout.next = ((a and b) or (a and carryin) or (b and carrying))
+        carryout.next = ((a and b) or (a and carryin) or (b and carryin))
 
     return comb_adder
 
@@ -205,7 +208,7 @@ def ALU1bit(a, b, carryin, binvert, operation, result, carryout):
 
     """ 1-bit ALU
 
-    Output: 
+    Output:
         result and carryout
 
     Input:
@@ -246,21 +249,21 @@ def ALU1bit(a, b, carryin, binvert, operation, result, carryout):
     # Create signals
 
     # For example, we create the signal `notb`, which is the output of the NOT gate
-    notb = Signal(bool(0))
+    # (already created above)
 
     # We need to create all the signals in the diagram
-    # e.g., the output of 2-1 mux, the output of the AND gate, and so on 
-    inputb = Singal(bool(0))
+    # e.g., the output of 2-1 mux, the output of the AND gate, and so on
+    inputb = Signal(bool(0))
     andb = Signal(bool(0))
     orb = Signal(bool(0))
     sumb = Signal(bool(0))
 
     # instantiating gates/blocks
     # here is an example to place the NOT gate
-    u_not = Not(notb, b) 
+    u_not = Not(notb, b)
 
-    # the name u_not is not critical. 
-    # you can name them u_not, u_mux2, and so on, 
+    # the name u_not is not critical.
+    # you can name them u_not, u_mux2, and so on,
     # or just u1, u2, u3, ...
 
     # continue to instantiate other gates/modules
@@ -269,11 +272,12 @@ def ALU1bit(a, b, carryin, binvert, operation, result, carryout):
     u_and = And2(andb, a, inputb)
     u_or = Or2(orb, a, inputb)
     u_add = Adder1bit(a, inputb, carryin, carryout, sumb)
-    u_op = Mux4(result, andb, orb, sumb, singal0, operation)
+    u_op = Mux4(result, andb, orb, sumb, signal0, operation)
 
     ##########################################
     # No need to change the lines below
 
-    # return all the functions/submodules 
+    # return all the functions/submodules
     # we could list them explicitly, like u_not, u1, u2, and so on
     return instances()
+
