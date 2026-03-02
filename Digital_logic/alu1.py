@@ -271,7 +271,7 @@ def ALU1bit(a, b, carryin, binvert, operation, result, carryout):
     u_and = And2(andb, a, inputb)
     u_or = Or2(orb, a, inputb)
     u_add = Adder1bit(a, inputb, carryin, carryout, sumb)
-    u_op = Mux4(result, andb, orb, sumb, sumb, operation)
+    u_op = Mux4(result, andb, orb, sumb, orb, operation)
 
     ##########################################
     # No need to change the lines below
