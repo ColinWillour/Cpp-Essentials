@@ -248,7 +248,6 @@ def ALU1bit(a, b, carryin, binvert, operation, result, carryout):
     # Create signals
 
     # For example, we create the signal `notb`, which is the output of the NOT gate
-    notb = Signal(bool(0))
 
     # We need to create all the signals in the diagram
     # e.g., the output of 2-1 mux, the output of the AND gate, and so on 
