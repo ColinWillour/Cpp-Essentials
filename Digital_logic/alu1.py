@@ -78,8 +78,7 @@ def Mux2(c, a, b, s):
         # TODO
         # generate the output with a logical expression
         # do not use if-else
-        c.next = (not s and a) or (s and b)
-
+        c.next = (s and b) or (not s and a)
 
     return mux_logic
 
@@ -154,13 +153,13 @@ def Mux4(z, a, b, c, d, s):
     @always_comb
     def mux_logic():
         # TODO
-        
+
         # Generate z from a, b, c, d and s
+
         # copy values to s1 and s0, which are easier to type
         # in your expression
         s1, s0 = s[1], s[0]
         z.next = ((not s1 and not s0 and a) or (not s1 and s0 and b) or (s1 and not s0 and c) or (s1 and s0 and d))
-
 
     return mux_logic
 
@@ -196,9 +195,8 @@ def Adder1bit(a, b, carryin, carryout, s):
         # For example, 
         # s.next = 
         # carryout.out = 
-
         s.next = a ^ b ^ carryin
-        carryout.next = ((a and b) or (a and carryin) or (b and carryin))
+        carryout.next = ((a and b) or (a and carryin) or (b and carrying))
 
     return comb_adder
 
@@ -248,14 +246,15 @@ def ALU1bit(a, b, carryin, binvert, operation, result, carryout):
     # Create signals
 
     # For example, we create the signal `notb`, which is the output of the NOT gate
+    notb = Signal(bool(0))
 
     # We need to create all the signals in the diagram
     # e.g., the output of 2-1 mux, the output of the AND gate, and so on 
-    inputb = Signal(bool(0))
+    inputb = Singal(bool(0))
     andb = Signal(bool(0))
     orb = Signal(bool(0))
     sumb = Signal(bool(0))
-    
+
     # instantiating gates/blocks
     # here is an example to place the NOT gate
     u_not = Not(notb, b) 
@@ -266,11 +265,11 @@ def ALU1bit(a, b, carryin, binvert, operation, result, carryout):
 
     # continue to instantiate other gates/modules
     # like 2-1 MUX and AND
-    u_mux = Mux2(inputb, b, notb, binvert)
+    u_mux2 = Mux2(inputb, b, notb, binvert)
     u_and = And2(andb, a, inputb)
     u_or = Or2(orb, a, inputb)
     u_add = Adder1bit(a, inputb, carryin, carryout, sumb)
-    u_op = Mux4(result, andb, orb, sumb, orb, operation)
+    u_op = Mux3(result, andb, orb, sumb, singal0, operation)
 
     ##########################################
     # No need to change the lines below
