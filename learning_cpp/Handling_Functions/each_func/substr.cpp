@@ -1,11 +1,8 @@
-/*
-   Demonstrates substr().
-   Real problem: Extract area code from phone number.
-*/
+// substr() Extract area code from phone number.
 
 #include <iostream>
 #include <string>
-using namespace std;
+using std::cout, std::endl, std::string;
 
 int main() {
     string phone = "860-555-1234";
