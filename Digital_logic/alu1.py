@@ -159,10 +159,7 @@ def Mux4(z, a, b, c, d, s):
         # copy values to s1 and s0, which are easier to type
         # in your expression
         s1, s0 = s[1], s[0]
-        z.next = ((not s1 and not s0 and a) or 
-                  (not s1 and s0 and b) or 
-                  (s1 and not s0 and c) or 
-                  (s1 and s0 and d))
+        z.next = ((not s1 and not s0 and a) or (not s1 and s0 and b) or (s1 and not s0 and c) or (s1 and s0 and d))
 
 
     return mux_logic
@@ -201,8 +198,7 @@ def Adder1bit(a, b, carryin, carryout, s):
         # carryout.out = 
 
         s.next = a ^ b ^ carryin
-        carryout.next = ((a and b) or (a and carryin) or 
-                        (b and carryin))
+        carryout.next = ((a and b) or (a and carryin) or (b and carryin))
 
     return comb_adder
 
