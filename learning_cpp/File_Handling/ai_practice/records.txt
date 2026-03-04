@@ -1,0 +1,5 @@
+Alice 30 55000
+Bob 19 42000
+Charlie 200 999999
+Diana -5 30000
+Eve 40 abc
