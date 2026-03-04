@@ -18,4 +18,5 @@ int main() {
 	}
 
 	cout << "Number of lines: " << count << endl;
+	file.close();
 }
