@@ -9,35 +9,30 @@ using std::endl, std::cout, std::string;
 void process_file(std::string input, std::string output) {
 	std::ifstream input_file(input);
 	if (!input_file.is_open()) {
-		std::cerr << "Error opening file";
+		cout << "Error opening file" << endl;
 		return;
 	}
 
 	std::ofstream output_file(output, std::ios::app);
 	if (!output_file.is_open()) {
-		std::cerr << "Error opening file";
+		cout << "Error opening file" << endl;
 		return;
 	}
 	
-	char input_delimiter;
-	char output_delimiter;
+	char input_delimiter = '\t';
+	char output_delimiter = '\t';
 	if (input.find(".tsv") != string::npos) {
 		input_delimiter = '\t';
 	}
 	else if (input.find(".csv") != string::npos) {
 		input_delimiter = ',';
 	}
-	else {
-		std::cerr << "Error file not found";
-	}
+
 	if (output.find(".tsv") != string::npos) {
 		output_delimiter = '\t';
 	}
 	else if (output.find(".csv") != string::npos) {
 		output_delimiter = ',';
-	}
-	else {
-		std::cerr << "Error file not found";
 	}
 
 	string username = "";
@@ -64,11 +59,12 @@ void run_menu() {
 		cout << "3. Quit" << endl;
 		int pick;
 		std::cin >> pick;
+		std::cin.ignore();
 		switch (pick) {
 			case 1: {
 				cout << "Enter a password:" << endl;
 				string password;
-				std::cin >> password;
+				getline(std::cin, password);
 				bool is_valid = is_valid_password(password);
 				if (is_valid) {
 					cout << "Valid" << endl;

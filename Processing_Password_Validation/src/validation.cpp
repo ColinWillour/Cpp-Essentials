@@ -6,7 +6,8 @@ using std::endl, std::string, std::cout;
 
 bool is_valid_password(string password) {
 	if (password.length() < 8) {
-		std::cerr << "Password not long enough" << endl;
+		cout << "Password not long enough" << endl;
+		return false;
 	}
 
 	bool upper_check = false;
