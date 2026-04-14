@@ -1,7 +1,7 @@
 #include <iostream>
 
 double* normalize(const double* arr, size_t size, double* min_out, double* max_out) {
-        // your code here (must use pointer arithmetic)
+        
         return nullptr;
 }
 
